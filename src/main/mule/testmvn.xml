@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="883184e9-5a7b-4007-a0a5-1725c1a1ea9c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="testmvnFlow" doc:id="4c3d84cb-51e1-4d26-a922-475f7bdb05b6" >
+		<http:listener doc:name="Listener" doc:id="d010dcbd-699e-4559-b375-769ef956ae63" config-ref="HTTP_Listener_config" path="testmvn"/>
+		<ee:transform doc:name="Transform Message" doc:id="876b5973-cc31-48ba-81a7-f15eeaabb430" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+"There is no God but Allah"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="2a1f1293-70be-4820-a79e-d831f655081c" message="#[payload]"/>
+	</flow>
+</mule>
